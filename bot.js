@@ -37,12 +37,14 @@ client.on("messageCreate", async (message) => {
     if (command === "play") {
         if (args.length < 1) {
             const embed = new EmbedBuilder()
-            .setColor('#FF0000')
-            .setTitle('Error: Falta el nombre o enlace de la canción')
-            .setDescription('Por favor, proporciona el nombre o enlace de la canción que deseas reproducir.\nEjemplo: `?play nombre_de_la_cancion` o `?play enlace_de_la_cancion`')
-            .setFooter('La longitud mínima del nombre de la canción debe ser de al menos 3 caracteres.');
-    
-        return message.channel.send({ embeds: [embed] });
+        .setColor('#ffff00')
+        .setAuthor({
+          name: 'Error: Ingresa Nombre Valido',
+          iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239613388439425055/maxresdefault.png?ex=66438f6e&is=66423dee&hm=62a76261e12d649e21c96e14255905d2194b2e16f5ec248b129ed6596d212ddf&',
+          url: 'https://discord.com/invite/E8XhYrDcjV'
+        })
+          .setDescription('**Nosehagamatar :gun: **');
+          channel.send({ embeds: [embed] });
     }
 
         const query = args.join(" ");
