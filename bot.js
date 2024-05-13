@@ -54,7 +54,7 @@ client.on("messageCreate", async (message) => {
             const embed = new EmbedBuilder()
             .setAuthor({
                 name: 'Added To Queue',
-                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157218651179597884/1213-verified.gif?ex=6517cf5a&is=65167dda&hm=cf7bc8fb4414cb412587ade0af285b77569d2568214d6baab8702ddeb6c38ad5&', 
+                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
                 url: 'https://discord.com/invite/E8XhYrDcjV'
             })
                 .setDescription(`**Playlist Name : **${playlistInfo.name} \n**Tracks : **${tracks.length}`)
@@ -71,7 +71,7 @@ client.on("messageCreate", async (message) => {
             const embed = new EmbedBuilder()
             .setAuthor({
                 name: 'Added To Queue',
-                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157218651179597884/1213-verified.gif?ex=6517cf5a&is=65167dda&hm=cf7bc8fb4414cb412587ade0af285b77569d2568214d6baab8702ddeb6c38ad5&', 
+                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
                 url: 'https://discord.com/invite/E8XhYrDcjV'
             })
                 .setDescription(`**${track.info.title} **has been queued up and is ready to play!`)
@@ -185,7 +185,7 @@ client.on("messageCreate", async (message) => {
            .setColor('#2b71ec')
         .setAuthor({
           name: 'Skipped Song!',
-          iconURL: 'https://cdn.discordapp.com/attachments/1175488636033175602/1175488721253052426/right-chevron-.png?ex=656b6a2e&is=6558f52e&hm=7a73aa51cb35f25eba52055c7b4a1b56bbf3a6d150643adc15b52dc533236956&',
+          iconURL: 'https://s1.zerochan.net/Kasuga.%22Osaka%22.Ayumu.600.1320862.jpg',
           url: 'https://discord.com/invite/E8XhYrDcjV'
         })
           .setDescription('**Let\'s move on to the next beat...**');
@@ -200,7 +200,7 @@ client.on("messageCreate", async (message) => {
         .setColor('#188dcc')
         .setAuthor({
           name: 'Shuffled Queue!',
-          iconURL: 'https://cdn.discordapp.com/attachments/1230824451990622299/1236794583732457473/7828-verify-ak.gif?ex=6641dff7&is=66408e77&hm=e4d3f67ff76adbb3b7ee32fa57a24b7ae4c5acfe9380598e2f7e1a6c8ab6244c&',
+          iconURL: 'https://preview.redd.it/achtually-my-name-is-ayumu-kasuga-not-osaka-v0-ogt8iiitzc8a1.jpg?width=1080&crop=smart&auto=webp&s=f5e868b7b1412741d3fb3e6b8329074bfb89df8a',
           url: 'https://discord.com/invite/E8XhYrDcjV'
         })
           .setDescription('**Let\'s change the rhythm with a random selection!**');
@@ -216,7 +216,7 @@ client.on("messageCreate", async (message) => {
         .setColor('#2b71ec')
         .setAuthor({
           name: 'Player Stopped!',
-          iconURL: 'https://cdn.discordapp.com/attachments/1230824451990622299/1230824519220985896/6280-2.gif?ex=6641e8a8&is=66409728&hm=149efc9db2a92eb90c70f0a6fb15618a5b912b528f6b1dcf1b517c77a72a733a&',
+          iconURL: 'https://static.wikia.nocookie.net/azumanga/images/d/d1/Osaka_Icon.jpg/revision/latest/scale-to-width-down/250?cb=20130808182045',
           url: 'https://discord.com/invite/E8XhYrDcjV'
         })
           .setDescription('**Bringing the music to a halt...**');
@@ -278,8 +278,8 @@ client.riffy.on("trackStart", async (player, track) => {
         .setColor("#FF7A00")
 
         .setAuthor({
-            name: 'Currently playing a Track',
-            iconURL: 'https://cdn.discordapp.com/attachments/1140841446228897932/1144671132948103208/giphy.gif', 
+            name: 'Canción Actual',
+            iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606643419906048/osaka-ayumu-kasuga.gif?ex=66438926&is=664237a6&hm=fccee9ca765740a2d619900542dfe1765b19293f702aa8e27a949a9c60b998a9&', 
             url: 'https://discord.gg/xQF9f9yUEM'
           })
         .setDescription(details)
@@ -301,10 +301,10 @@ client.riffy.on("queueEnd", async (player) => {
         .setColor('#ffff00')
         .setAuthor({
           name: 'Queue Ended!',
-          iconURL: 'https://cdn.discordapp.com/attachments/1230824451990622299/1230824519220985896/6280-2.gif?ex=6641e8a8&is=66409728&hm=149efc9db2a92eb90c70f0a6fb15618a5b912b528f6b1dcf1b517c77a72a733a&',
+          iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
           url: 'https://discord.com/invite/E8XhYrDcjV'
         })
-          .setDescription('**Bye Bye!, No more songs to play...**');
+          .setDescription('**Bye Bye! :moyai: **');
           channel.send({ embeds: [embed] });
       
     }
