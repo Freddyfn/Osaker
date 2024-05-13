@@ -35,18 +35,6 @@ client.on("messageCreate", async (message) => {
     const command = args.shift().toLowerCase();
   
     if (command === "play") {
-        if (args.length < 1) {
-            const embed = new EmbedBuilder()
-        .setColor('#ffff00')
-        .setAuthor({
-          name: 'Error: Ingresa Nombre Valido',
-          iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239613388439425055/maxresdefault.png?ex=66438f6e&is=66423dee&hm=62a76261e12d649e21c96e14255905d2194b2e16f5ec248b129ed6596d212ddf&',
-          url: 'https://discord.com/invite/E8XhYrDcjV'
-        })
-          .setDescription('**Nosehagamatar :gun: **');
-          channel.send({ embeds: [embed] });
-    }
-
         const query = args.join(" ");
         const player = client.riffy.createConnection({
             guildId: message.guild.id,
@@ -306,18 +294,19 @@ client.riffy.on("queueEnd", async (player) => {
     const channel = client.channels.cache.get(player.textChannel);
     const autoplay = false;
     if (autoplay) {
-        player.autoplay(player);
+        player.autoplay(player)
     } else {
         player.destroy();
         const embed = new EmbedBuilder()
-            .setColor('#ffff00')
-            .setAuthor({
-                name: 'Queue Ended!',
-                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
-                url: 'https://discord.com/invite/E8XhYrDcjV'
-            })
-            .setDescription('**Bye Bye! :moyai: **');
-        channel.send({ embeds: [embed] });
+        .setColor('#ffff00')
+        .setAuthor({
+          name: 'Queue Ended!',
+          iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
+          url: 'https://discord.com/invite/E8XhYrDcjV'
+        })
+          .setDescription('**Bye Bye! :moyai: **');
+          channel.send({ embeds: [embed] });
+      
     }
 });
 
