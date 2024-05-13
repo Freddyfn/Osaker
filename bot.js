@@ -35,9 +35,15 @@ client.on("messageCreate", async (message) => {
     const command = args.shift().toLowerCase();
   
     if (command === "play") {
-        if (args.length < 1) { // Verifica si no se proporcionan argumentos
-            return message.channel.send("Ingresa el nombre o link de una canción! :man_with_probing_cane: ");
-        }
+        if (args.length < 1) {
+            const embed = new EmbedBuilder()
+            .setColor('#FF0000')
+            .setTitle('Error: Falta el nombre o enlace de la canción')
+            .setDescription('Por favor, proporciona el nombre o enlace de la canción que deseas reproducir.\nEjemplo: `?play nombre_de_la_cancion` o `?play enlace_de_la_cancion`')
+            .setFooter('La longitud mínima del nombre de la canción debe ser de al menos 3 caracteres.');
+    
+        return message.channel.send({ embeds: [embed] });
+    }
 
         const query = args.join(" ");
         const player = client.riffy.createConnection({
