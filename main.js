@@ -1,24 +1,21 @@
-
-
+require('dotenv').config(); // Cargar variables de entorno desde el archivo .env
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const { Player } = require('discord-player');
 const express = require('express');
-require('dotenv').config();
-
 
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a) => {
     return GatewayIntentBits[a];
   }),
 });
+
 const { printWatermark } = require('./functions/handlers');
 const configPath = './config.json';
 const configData = JSON.parse(fs.readFileSync(configPath));
 const prefix = configData.prefix;
-
 
 const app = express();
 const port = 3000;
@@ -87,8 +84,6 @@ client.on('messageCreate', (message) => {
   }
 });
 
-
-
 async function login() {
   try {
     await client.login(process.env.TOKEN);
@@ -103,7 +98,6 @@ async function login() {
   }
 }
 
-
 client.once('ready', () => {
   setTimeout(() => {
     console.log('\x1b[32m%s\x1b[0m', `|    🎯 Activity sucessfully set!`);
@@ -114,9 +108,7 @@ client.once('ready', () => {
   }, 2000); 
 });
 
-
 login();
-
 
 setInterval(() => {
   if (!client || !client.user) {
@@ -126,5 +118,3 @@ setInterval(() => {
 }, 15000);
 
 module.exports = client;
-
-
