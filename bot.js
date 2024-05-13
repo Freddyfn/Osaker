@@ -306,19 +306,18 @@ client.riffy.on("queueEnd", async (player) => {
     const channel = client.channels.cache.get(player.textChannel);
     const autoplay = false;
     if (autoplay) {
-        player.autoplay(player)
+        player.autoplay(player);
     } else {
         player.destroy();
         const embed = new EmbedBuilder()
-        .setColor('#ffff00')
-        .setAuthor({
-          name: 'Queue Ended!',
-          iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
-          url: 'https://discord.com/invite/E8XhYrDcjV'
-        })
-          .setDescription('**Bye Bye! :moyai: **');
-          channel.send({ embeds: [embed] });
-      
+            .setColor('#ffff00')
+            .setAuthor({
+                name: 'Queue Ended!',
+                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
+                url: 'https://discord.com/invite/E8XhYrDcjV'
+            })
+            .setDescription('**Bye Bye! :moyai: **');
+        channel.send({ embeds: [embed] });
     }
 });
 
