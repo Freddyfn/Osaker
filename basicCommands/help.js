@@ -57,7 +57,7 @@ module.exports = {
         }
       )
       .setThumbnail(botUser.avatarURL({ dynamic: true, format: 'png', size: 1024 }))
-      .setImage(`https://cdn.discordapp.com/attachments/1113800537402527903/1236803979996958740/11.png?ex=6641e8b7&is=66409737&hm=96f69ba8bcde4ca44bf8713e22001e0bafad0335cfd1f57c439a34b4762f0e03&`);
+      .setImage(`https://media.discordapp.net/attachments/933555415394959450/1231779648959152210/image.png?ex=6642bf31&is=66416db1&hm=5c57b8d138a43323ac60352c75d396ecc640c391f5ebd14e6a04dcf1fca8233a&=&format=webp&quality=lossless&width=420&height=350`);
 
     const button1 = new ButtonBuilder()
       .setLabel('YouTube')
