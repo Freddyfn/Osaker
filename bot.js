@@ -317,24 +317,24 @@ client.riffy.on("trackStart", async (player, track) => {
 
     fs.writeFileSync("musicard.png", musicard);
     const details = `**Title:** ${track.info.title}\n` +
-    `**Author:** ${track.info.author}\n` +
-    `**Seekable:** ${track.info.seekable}\n` +
-    `**Stream:** ${track.info.stream}\n` +
-    `**Requester:** ${track.info.requester}\n` +
-    `**Source Name:** ${track.info.sourceName}`;
+        `**Author:** ${track.info.author}\n` +
+        `**Seekable:** ${track.info.seekable}\n` +
+        `**Stream:** ${track.info.stream}\n` +
+        `**Requester:** ${track.info.requester}\n` +
+        `**Source Name:** ${track.info.sourceName}`;
 
     const musicEmbed = new EmbedBuilder()
         .setColor("#FF7A00")
         .setAuthor({
             name: 'Canción Actual',
-            iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606643419906048/osaka-ayumu-kasuga.gif?ex=66438926&is=664237a6&hm=fccee9ca765740a2d619900542dfe1765b19293f702aa8e27a949a9c60b998a9&', 
+            iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606643419906048/osaka-ayumu-kasuga.gif?ex=66438926&is=664237a6&hm=fccee9ca765740a2d619900542dfe1765b19293f702aa8e27a949a9c60b998a9&',
             url: 'https://discord.gg/xQF9f9yUEM'
         })
         .setDescription(details)
         .setImage("attachment://musicard.png");
 
     const channel = client.channels.cache.get(player.textChannel);
-    
+
     if (!channel.currentSongMessage) {
         // Si no hay mensaje de canción actual, enviar uno nuevo
         const message = await channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
@@ -344,6 +344,9 @@ client.riffy.on("trackStart", async (player, track) => {
         const message = channel.currentSongMessage;
         await message.edit({ embeds: [musicEmbed], files: ["musicard.png"] });
     }
+
+    // Actualizar el mensaje de la canción actual en el canal de texto asociado con el reproductor
+    channel.currentSongMessage = await channel.currentSongMessage.edit({ embeds: [musicEmbed], files: ["musicard.png"] });
 });
 
 
