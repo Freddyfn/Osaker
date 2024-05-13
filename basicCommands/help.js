@@ -17,7 +17,7 @@ module.exports = {
         url: 'https://discord.gg/E8XhYrDcjV'
     })
      
-      .setDescription(`__**STATS :**__\n\n> **📊 Bot in servers:** ${serverCount}\n> **🟢 Bot Ping:** ${botPing}ms\n> **👑 Prueba)**\n\n__**COMMANDS :**__ `)
+      .setDescription(`__**STATS :**__\n\n> **📊 Bot in servers:** ${serverCount}\n> **🟢 Bot Ping:** ${botPing}ms\n> **👑 Prueba**\n\n__**COMMANDS :**__ `)
       .addFields(
       
         {
