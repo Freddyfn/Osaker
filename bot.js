@@ -35,6 +35,10 @@ client.on("messageCreate", async (message) => {
     const command = args.shift().toLowerCase();
   
     if (command === "play") {
+        if (args.length < 1) { // Verifica si no se proporcionan argumentos
+            return message.channel.send("Ingresa el nombre o link de una canción!");
+        }
+
         const query = args.join(" ");
         const player = client.riffy.createConnection({
             guildId: message.guild.id,
