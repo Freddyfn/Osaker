@@ -36,7 +36,7 @@ client.on("messageCreate", async (message) => {
   
     if (command === "play") {
         if (args.length < 1) { // Verifica si no se proporcionan argumentos
-            return message.channel.send("Ingresa el nombre o link de una canción!");
+            return message.channel.send("Ingresa el nombre o link de una canción! :man_with_probing_cane: ");
         }
 
         const query = args.join(" ");
