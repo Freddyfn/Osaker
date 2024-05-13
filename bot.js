@@ -36,52 +36,75 @@ client.on("messageCreate", async (message) => {
   
     if (command === "play") {
         const query = args.join(" ");
-        const player = client.riffy.createConnection({
-            guildId: message.guild.id,
-            voiceChannel: message.member.voice.channel.id,
-            textChannel: message.channel.id,
-            deaf: true 
-        });
-  
-        const resolve = await client.riffy.resolve({ query: query, requester: message.author });
-        const { loadType, tracks, playlistInfo } = resolve;
-  
-        if (loadType === 'playlist') {
-            for (const track of resolve.tracks) {
+        if (query.length < 3) {
+            const embed = new EmbedBuilder()
+                .setColor('#FF0000')
+                .setAuthor({
+                    name: 'ERROR',
+                    iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239620150702112788/kill.png?ex=664395ba&is=6642443a&hm=b9330816716f068162e813e2d5d7f48bb43745efd21cb0a0be66f0181a9b3f60&',
+                    url: 'https://discord.com/invite/E8XhYrDcjV'
+                  })
+                .setDescription('Ingresa una canción valida! :x: ');
+            return message.reply({ embeds: [embed] });
+        }
+        try {
+            const player = client.riffy.createConnection({
+                guildId: message.guild.id,
+                voiceChannel: message.member.voice.channel.id,
+                textChannel: message.channel.id,
+                deaf: true 
+            });
+        
+            const resolve = await client.riffy.resolve({ query: query, requester: message.author });
+            const { loadType, tracks, playlistInfo } = resolve;
+        
+            if (loadType === 'playlist') {
+                for (const track of resolve.tracks) {
+                    track.info.requester = message.author;
+                    player.queue.add(track);
+                }
+                const embed = new EmbedBuilder()
+                .setAuthor({
+                    name: 'Added To Queue',
+                    iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
+                    url: 'https://discord.com/invite/E8XhYrDcjV'
+                })
+                    .setDescription(`**Playlist Name : **${playlistInfo.name} \n**Tracks : **${tracks.length}`)
+                    .setColor('#14bdff')
+                    .setFooter({ text: 'Use queue command for more Information' });
+                message.reply({ embeds: [embed] });
+                if (!player.playing && !player.paused) return player.play();
+        
+            } else if (loadType === 'search' || loadType === 'track') {
+                const track = tracks.shift();
                 track.info.requester = message.author;
                 player.queue.add(track);
+        
+                const embed = new EmbedBuilder()
+                .setAuthor({
+                    name: 'Added To Queue',
+                    iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
+                    url: 'https://discord.com/invite/E8XhYrDcjV'
+                })
+                    .setDescription(`**${track.info.title} **has been queued up and is ready to play!`)
+                    .setColor('#14bdff')
+                    .setFooter({ text: 'Use queue command for more Information' });
+                message.reply({ embeds: [embed] });
+        
+                if (!player.playing && !player.paused) return player.play();
+            } else {
+                return message.channel.send('There are no results found.');
             }
+        } catch (error) {
             const embed = new EmbedBuilder()
-            .setAuthor({
-                name: 'Added To Queue',
-                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
-                url: 'https://discord.com/invite/E8XhYrDcjV'
-            })
-                .setDescription(`**Playlist Name : **${playlistInfo.name} \n**Tracks : **${tracks.length}`)
-                .setColor('#14bdff')
-                .setFooter({ text: 'Use queue command for more Information' });
-            message.reply({ embeds: [embed] });
-            if (!player.playing && !player.paused) return player.play();
-  
-        } else if (loadType === 'search' || loadType === 'track') {
-            const track = tracks.shift();
-            track.info.requester = message.author;
-            player.queue.add(track);
-
-            const embed = new EmbedBuilder()
-            .setAuthor({
-                name: 'Added To Queue',
-                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239607939086684210/oaska-azudai.gif?ex=66438a5b&is=664238db&hm=8af109e62f6c6ca288c426732a5ffd869a6ed5a00423be570090791965a0126c&', 
-                url: 'https://discord.com/invite/E8XhYrDcjV'
-            })
-                .setDescription(`**${track.info.title} **has been queued up and is ready to play!`)
-                .setColor('#14bdff')
-                .setFooter({ text: 'Use queue command for more Information' });
-            message.reply({ embeds: [embed] });
-
-            if (!player.playing && !player.paused) return player.play();
-        } else {
-            return message.channel.send('There are no results found.');
+                .setColor('#FF0000')
+                .setAuthor({
+                    name: 'ERROR',
+                    iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239620150702112788/kill.png?ex=664395ba&is=6642443a&hm=b9330816716f068162e813e2d5d7f48bb43745efd21cb0a0be66f0181a9b3f60&',
+                    url: 'https://discord.com/invite/E8XhYrDcjV'
+                  })
+                .setDescription('Ocurrió un error al procesar la solicitud. Por favor, intenta de nuevo más tarde.');
+            return message.reply({ embeds: [embed] });
         }
     } else if (command === "loop") {
         const player = client.riffy.players.get(message.guild.id); 
@@ -239,6 +262,34 @@ client.on("messageCreate", async (message) => {
     }
 });
 
+client.riffy.on("playerCreate", async (player) => {
+    const voiceChannel = client.channels.cache.get(player.voiceChannel);
+    console.log(`El bot se unió al canal de voz: ${voiceChannel.name}`);
+
+    const waitTime = 60000; // 1 min en milisegundos
+
+    const checkUsers = async () => {
+        const members = voiceChannel.members.filter(member => !member.user.bot);
+        if (members.size === 0) {
+            console.log('No hay otros usuarios en el canal de voz.');
+            player.disconnect();
+            const embed = new EmbedBuilder()
+                .setColor('#ff0000')
+                .setDescription('Nadie más en el canal de voz. Saliendo del canal.');
+            const channel = client.channels.cache.get(player.textChannel);
+            channel.send({ embeds: [embed] });
+        }
+    };
+
+    // Esperar hasta que alguien se una al canal de voz o hasta que pase el tiempo de espera
+    await Promise.race([
+        new Promise(resolve => player.on('playerJoin', resolve)),
+        new Promise(resolve => setTimeout(resolve, waitTime))
+    ]);
+
+    // Verificar si todavía hay usuarios en el canal antes de finalizar
+    checkUsers();
+});
 
 client.riffy.on("nodeConnect", node => {
     console.log(`Node "${node.name}" connected.`)
