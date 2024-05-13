@@ -201,34 +201,32 @@ client.on("messageCreate", async (message) => {
     } else if (command === "skip") {
         const player = client.riffy.players.get(message.guild.id); 
         if (!player) return message.channel.send("No player available.");
-    
-        player.stop();
-
-        const embed = new EmbedBuilder()
-           .setColor('#2b71ec')
-        .setAuthor({
-          name: 'Skipped Song!',
-          iconURL: 'https://s1.zerochan.net/Kasuga.%22Osaka%22.Ayumu.600.1320862.jpg',
-          url: 'https://discord.com/invite/E8XhYrDcjV'
-        })
-          .setDescription('**Let\'s move on to the next beat...**');
         
-        message.reply({ embeds: [embed] });
-    } else if (command === "shuffle") {
-        const player = client.riffy.players.get(message.guild.id); 
-        if (!player) return message.channel.send("No player available.");
-
-        player.queue.shuffle();
+        player.stop();
+    
         const embed = new EmbedBuilder()
-        .setColor('#188dcc')
-        .setAuthor({
-          name: 'Shuffled Queue!',
-          iconURL: 'https://preview.redd.it/achtually-my-name-is-ayumu-kasuga-not-osaka-v0-ogt8iiitzc8a1.jpg?width=1080&crop=smart&auto=webp&s=f5e868b7b1412741d3fb3e6b8329074bfb89df8a',
-          url: 'https://discord.com/invite/E8XhYrDcjV'
-        })
-          .setDescription('**Let\'s change the rhythm with a random selection!**');
-
-        message.reply({ embeds: [embed] });
+            .setColor('#2b71ec')
+            .setAuthor({
+                name: 'Skipped Song!',
+                iconURL: 'https://s1.zerochan.net/Kasuga.%22Osaka%22.Ayumu.600.1320862.jpg',
+                url: 'https://discord.com/invite/E8XhYrDcjV'
+            })
+            .setDescription('**Let\'s move on to the next beat...**');
+    
+        // Enviar mensaje de confirmación de salto
+        message.reply({ embeds: [embed] }).then((msg) => {
+            // Borra el mensaje después de 15 segundos
+            setTimeout(() => {
+                msg.delete().catch(console.error);
+            }, 15000); // 15 segundos
+    
+            // Borra el mensaje de ?skip del usuario después de que se haya enviado el mensaje de confirmación
+            if (message.deletable) {
+                setTimeout(() => {
+                    message.delete().catch(console.error);
+                }, 1000); // Esperar 1 segundo antes de borrar el mensaje del usuario
+            }
+        });
     } else if (command === "stop") {
         const player = client.riffy.players.get(message.guild.id); 
         if (!player) return message.channel.send("No player available.");
@@ -327,17 +325,25 @@ client.riffy.on("trackStart", async (player, track) => {
 
     const musicEmbed = new EmbedBuilder()
         .setColor("#FF7A00")
-
         .setAuthor({
             name: 'Canción Actual',
             iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606643419906048/osaka-ayumu-kasuga.gif?ex=66438926&is=664237a6&hm=fccee9ca765740a2d619900542dfe1765b19293f702aa8e27a949a9c60b998a9&', 
             url: 'https://discord.gg/xQF9f9yUEM'
-          })
+        })
         .setDescription(details)
         .setImage("attachment://musicard.png");
 
     const channel = client.channels.cache.get(player.textChannel);
-    channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
+    
+    if (!channel.currentSongMessage) {
+        // Si no hay mensaje de canción actual, enviar uno nuevo
+        const message = await channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
+        channel.currentSongMessage = message;
+    } else {
+        // Si hay un mensaje de canción actual, editar su contenido
+        const message = channel.currentSongMessage;
+        await message.edit({ embeds: [musicEmbed], files: ["musicard.png"] });
+    }
 });
 
 
