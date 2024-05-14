@@ -28,7 +28,7 @@ app.listen(port, () => {
 });
 printWatermark();
 
-
+client.commands = new Map();
 
 client.on('messageCreate', (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
