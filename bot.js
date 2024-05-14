@@ -335,18 +335,15 @@ client.riffy.on("trackStart", async (player, track) => {
 
     const channel = client.channels.cache.get(player.textChannel);
 
-    if (!channel.currentSongMessage) {
-        // Si no hay mensaje de canción actual, enviar uno nuevo
-        const message = await channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
-        channel.currentSongMessage = message;
-    } else {
-        // Si hay un mensaje de canción actual, editar su contenido
-        const message = channel.currentSongMessage;
-        await message.edit({ embeds: [musicEmbed], files: ["musicard.png"] });
+    // Si hay un mensaje de canción actual, elimínalo
+    if (channel.currentSongMessage) {
+        await channel.currentSongMessage.delete();
     }
 
-    // Actualizar el mensaje de la canción actual en el canal de texto asociado con el reproductor
-    channel.currentSongMessage = await channel.currentSongMessage.edit({ embeds: [musicEmbed], files: ["musicard.png"] });
+    // Envía un nuevo mensaje de la canción actual
+    const message = await channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
+    // Guarda el nuevo mensaje en la propiedad currentSongMessage del canal
+    channel.currentSongMessage = message;
 });
 
 
