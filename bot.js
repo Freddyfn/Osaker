@@ -347,53 +347,28 @@ client.riffy.on("trackStart", async (player, track) => {
 });
 
 
-client.riffy.on("trackStart", async (player, track) => {
-    const musicard = await Classic({
-        thumbnailImage: track.info.thumbnail,
-        backgroundColor: "#070707",
-        backgroundImage: "https://cdn.discordapp.com/attachments/1220001571228880917/1220001571690123284/01.png?ex=660d5a01&is=65fae501&hm=a8cfb44844e61aa0fd01767cd363af048df28966c30d7b04a59f27fa45cf69c4&",
-        nameColor: "#FF7A00",
-        progressColor: "#FF7A00",
-        progressBarColor: "#5F2D00",
-        progress: 50,
-        name: track.info.title,
-        author: `By ${track.info.author}`,
-        authorColor: "#696969",
-        startTime: "0:00",
-        endTime: "4:00",
-        timeColor: "#FF7A00"
-    });
-
-    fs.writeFileSync("musicard.png", musicard);
-
-    const details = `**Title:** ${track.info.title}\n` +
-        `**Author:** ${track.info.author}\n` +
-        `**Seekable:** ${track.info.seekable}\n` +
-        `**Stream:** ${track.info.stream}\n` +
-        `**Requester:** ${track.info.requester}\n` +
-        `**Source Name:** ${track.info.sourceName}`;
-
-    const musicEmbed = new EmbedBuilder()
-        .setColor("#FF7A00")
-        .setAuthor({
-            name: 'Canción Actual',
-            iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606643419906048/osaka-ayumu-kasuga.gif?ex=66438926&is=664237a6&hm=fccee9ca765740a2d619900542dfe1765b19293f702aa8e27a949a9c60b998a9&',
-            url: 'https://discord.gg/xQF9f9yUEM'
-        })
-        .setDescription(details)
-        .setImage("attachment://musicard.png");
-
+client.riffy.on("queueEnd", async (player) => {
     const channel = client.channels.cache.get(player.textChannel);
 
-    // Si hay un mensaje de canción actual, elimínalo
-    if (channel.currentSongMessage) {
-        await channel.currentSongMessage.delete();
-    }
-
-    // Envía un nuevo mensaje de la canción actual
-    const message = await channel.send({ embeds: [musicEmbed], files: ["musicard.png"] });
-    // Guarda el nuevo mensaje en la propiedad currentSongMessage del canal
-    channel.currentSongMessage = message;
+    // Espera 2 minutos (120,000 milisegundos) antes de ejecutar el código dentro de setTimeout
+    setTimeout(async () => {
+        // Tu lógica aquí
+        const autoplay = false;
+        if (autoplay) {
+            player.autoplay(player)
+        } else {
+            player.destroy();
+            const embed = new EmbedBuilder()
+            .setColor('#ffff00')
+            .setAuthor({
+                name: 'Queue Ended!',
+                iconURL: 'https://cdn.discordapp.com/attachments/610222943741542418/1239606141051473931/byebye.jpg?ex=664388ae&is=6642372e&hm=2e3695a183797ea0c5a472b302b4c4c766bd311a19485ce76f331350f4a97f08&',
+                url: 'https://discord.com/invite/E8XhYrDcjV'
+            })
+                .setDescription('**Bye Bye! :moyai: **');
+            channel.send({ embeds: [embed] });
+        }
+    }, 120000); // 120,000 milisegundos = 2 minutos
 });
 
 
