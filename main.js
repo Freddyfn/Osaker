@@ -18,7 +18,7 @@ const configData = JSON.parse(fs.readFileSync(configPath));
 const prefix = configData.prefix;
 
 const app = express();
-const port = 3000;
+const port = 4001;
 app.get('/', (req, res) => {
   const imagePath = path.join(__dirname, 'index.html');
   res.sendFile(imagePath);
