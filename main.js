@@ -64,9 +64,13 @@ async function login() {
 
 client.once('ready', () => {
   setTimeout(() => {
-    console.log('\x1b[32m%s\x1b[0m', `|    🎯 Activity sucessfully set!`);
+    console.log('\x1b[32m%s\x1b[0m', `|    🎯 Activity successfully set!`);
     client.user.setPresence({
-      activities: [{ name: `Fokin v@1.1.0`, type: ActivityType.Custom }],
+      activities: [{
+        name: `Fokin v@1.1.0`,
+        type: ActivityType.Streaming,
+        url: 'https://www.twitch.tv/freddyaz_'
+      }],
       status: 'dnd',
     });
   }, 2000); 
